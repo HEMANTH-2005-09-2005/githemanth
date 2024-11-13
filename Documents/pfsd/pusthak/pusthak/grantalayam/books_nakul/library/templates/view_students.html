@@ -1,0 +1,122 @@
+{% extends 'admin_navbar.html' %}
+{% load static %}
+{% block title %} All Students List {% endblock %}
+{% block css %}
+<style>
+  body {
+    background-image: url("{% static 'background.jpg' %}"); /* Full-page background image */
+    background-size: cover; /* Ensure the image covers the whole page */
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; /* Full height of the viewport */
+  }
+
+  /* Gradient brown background for the table container */
+  .table-container {
+    background: linear-gradient(135deg, #8B4513, #D2691E); /* Gradient from darker to lighter brown */
+    border-radius: 10px;
+    padding: 30px; /* Increased padding for better spacing */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for better visibility */
+    color: #FFF; /* Set the text color to white for better contrast */
+    max-width: 1200px; /* Increased width of the container */
+    margin: 20px auto; /* Center the container */
+    opacity: 0; /* Start with hidden */
+    animation: fadeIn 0.5s forwards; /* Fade in animation */
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  h1 {
+    color: #FFD700; /* Gold color for the header */
+    animation: slideIn 0.5s ease forwards; /* Slide in animation */
+    opacity: 0; /* Start with hidden */
+    animation-delay: 0.3s; /* Delay for the header */
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .table {
+    color: #000; /* Set table text color to black */
+  }
+
+  .table thead th {
+    background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent background for header */
+    color: #FFF; /* White text color for header */
+  }
+
+  .table-hover tbody tr {
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transition for hover effects */
+  }
+
+  .table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Light hover effect for rows */
+    transform: scale(1.02); /* Slightly enlarge the row on hover */
+  }
+
+  .btn-danger {
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transition for button color and scale */
+  }
+
+  .btn-danger:hover {
+    background-color: #c82333; /* Darker red on hover */
+    transform: scale(1.1); /* Slightly enlarge the button on hover */
+  }
+
+  .btn-danger:active {
+    transform: scale(1); /* Reset size on click */
+  }
+</style>
+{% endblock %}
+{% block body %}
+<div class="container mt-4">
+    <div class="table-container"> <!-- Added gradient background container -->
+        <h1 class="text-center"><u>Students List</u></h1>
+        <table class="table table-hover" id="example">
+            <thead>
+                <tr class="text-center">
+                    <th>Sr.No</th>
+                    <th>Name</th>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Mobile Number</th>
+                    <th>Branch</th>
+                    <th>Class</th>
+                    <th>Roll Number</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr class="text-center">
+                    <td>{{forloop.counter}}.</td>
+                    <td>{{student.user.get_full_name}}</td>
+                    <td>{{student.user.id}}</td>
+                    <td>{{student.user.email}}</td>
+                    <td>{{student.phone}}</td>
+                    <td>{{student.branch}}</td>
+                    <td>{{student.classroom}}</td>
+                    <td>{{student.roll_no}}</td>
+                    <td><a href="/delete_student/{{student.id}}/" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this student?')">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

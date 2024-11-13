@@ -1,0 +1,155 @@
+{% extends 'student_navbar.html' %}
+{% load static %}
+{% block title %} Library Management System {% endblock %}
+{% block css %}
+<style>
+  body {
+    background-image: url("{% static 'background.jpg' %}"); /* Full-page background image */
+    background-size: cover; /* Ensure the image covers the whole page */
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; /* Full height of the viewport */
+  }
+
+  /* Gradient brown background for the table container */
+  .table-container {
+    background: linear-gradient(135deg, #8B4513, #D2691E); /* Gradient from darker to lighter brown */
+    border-radius: 10px;
+    padding: 30px; /* Increased padding for better spacing */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for better visibility */
+    margin: 20px auto; /* Center the container */
+    color: #FFF; /* Set the text color to white for better contrast */
+    max-width: 900px; /* Limit the width of the container */
+    opacity: 0; /* Start hidden */
+    animation: fadeIn 0.5s forwards; /* Fade in animation */
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  h1 {
+    color: #FFD700; /* Gold color for the header */
+    animation: slideIn 0.5s ease forwards; /* Slide in animation */
+    opacity: 0; /* Start hidden */
+    animation-delay: 0.3s; /* Delay for the header */
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .table {
+    color: #FFF; /* Set table text color to white */
+    animation: fadeIn 0.5s ease forwards; /* Fade in animation for the table */
+    opacity: 0; /* Start hidden */
+    animation-delay: 0.6s; /* Delay for the table */
+  }
+
+  .table thead th {
+    background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent background for header */
+    color: #FFF; /* White text color for header */
+  }
+
+  .table-hover tbody tr {
+    transition: background-color 0.3s; /* Smooth transition for row color */
+  }
+
+  .table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Light hover effect for rows */
+  }
+
+  /* Change book name color to black */
+  .table tbody td {
+    color: #000; /* Black color for all table cells */
+  }
+
+  .btn-danger {
+    transition: background-color 0.3s; /* Smooth transition for button color */
+  }
+
+  .btn-danger:hover {
+    background-color: #c82333; /* Darker red on hover */
+  }
+
+  /* Animation for delete button */
+  .btn-danger {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-danger:before {
+    content: '';
+    position: absolute;
+    background: rgba(255, 255, 255, 0.2);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform: translateY(-100%);
+    transition: transform 0.3s;
+    z-index: 0;
+  }
+
+  .btn-danger:hover:before {
+    transform: translateY(0);
+  }
+
+  .btn-danger span {
+    position: relative;
+    z-index: 1;
+  }
+</style>
+{% endblock %}
+{% block body %}
+<div class="table-container">
+    <h1 class="text-center"><u>All Books List</u></h1>
+    <table class="table table-hover" id="example">
+        <thead>
+            <tr>
+                <th>Sr.No</th>
+                <th>Book Name</th>
+                <th>Author</th>
+                <th>ISBN Number</th>
+                <th>Category</th>
+                <th>copies</th>
+                <th>location</th>
+                 <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td>{{forloop.counter}}.</td> <!-- Serial Number -->
+                <td>{{book.name}}</td> <!-- Book Name -->
+                <td>{{book.author}}</td> <!-- Author -->
+                <td>{{book.isbn}}</td> <!-- ISBN Number -->
+                <td>{{book.category}}</td><!-- Category -->
+                <td>{{book.copies}}</td><!--copies-->
+                  <td>{{book.location}}</td>
+                <td>
+                      <a href="{% url 'delete_book' book.id %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this book?')">
+            <span>Delete</span>
+        </a>
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,163 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %} GRANTALAYA 📚{% endblock %}
+{% block css %}
+<style>
+  body {
+    background-image: url("{% static 'background.jpg' %}"); /* Full-page background image */
+    background-size: cover;   /* Ensure the image covers the whole page */
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    opacity: 0; /* Start hidden for fade-in effect */
+    animation: fadeIn 1.5s forwards; /* Slow fade-in animation for the body */
+  }
+
+  /* Keyframes for fade-in animation */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Gradient brown background for the text container */
+  .bg-light {
+    background: linear-gradient(135deg, #8B4513, #D2691E); /* Gradient from darker to lighter brown */
+    border-radius: 10px;
+    padding: 15px; /* Reduced padding */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional shadow for better visibility */
+  }
+
+  .container-fluid h1, .container-fluid p {
+    color: #000; /* Default black text */
+  }
+
+  .container-fluid h2 {
+    color: #FFD700; /* Gold color for "NAKUL SRIRAJ" */
+    transition: transform 0.3s ease; /* Add transition for hover effect */
+  }
+
+  .container-fluid h2:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+  }
+
+  .btn-primary {
+    background-color: #8B4513; /* Brown color for the button */
+    border-color: #8B4513; /* Matching border color */
+    transition: background-color 0.3s, transform 0.3s; /* Button hover animation */
+  }
+
+  .btn-primary:hover {
+    background-color: #5A2E10; /* Darker brown on hover */
+    transform: scale(1.05); /* Slightly enlarge button on hover */
+  }
+
+  /* Gradient brown background for the container */
+  .container-fluid {
+    background: linear-gradient(135deg, #8B4513, #D2691E); /* Gradient brown color */
+    padding: 15px; /* Reduced padding */
+    border-radius: 10px;
+    max-width: 900px; /* Reduced max width to make the box smaller */
+    margin: auto;
+    color: #FFF; /* Set the text color to white for better contrast */
+  }
+
+  /* Slower pop-up effect for images */
+  .image-container img {
+    transition: transform 1s ease-in-out; /* Slow transition for image hover */
+  }
+
+  .image-container img:hover {
+    transform: scale(2.1); /* Image enlarges on hover */
+  }
+
+  /* Center images */
+  .image-container {
+    text-align: center;
+  }
+
+  /* Footer styles */
+  footer {
+    background-color: rgba(139, 69, 19, 0.8); /* Semi-transparent brown */
+    color: #FFD700; /* Gold text color */
+    text-align: center;
+    padding: 10px 0; /* Padding for footer */
+    position: relative; /* Allows for positioning within the container */
+    bottom: 0;
+    width: 100%;
+  }
+
+  /* Image click animation - slow enlarge */
+  .clicked-image {
+    transform: scale(0.0); /* Enlarge by 1.5 times */
+    transition: transform 1s ease-in-out; /* Slow transition */
+  }
+</style>
+{% endblock %}
+{% block body %}
+<div class="p-3"> <!-- Reduced padding -->
+    <div class="container-fluid py-3 bg-light">
+      <h1 class="display-5 fw-bold">Welcome to Grantalaya Management System</h1>
+      <h2 class="display-5 fw-bold"></h2> <!-- Gold font for this -->
+      <p class="col-md-8 fs-4">"A library is not a luxury but one of the necessities of life."
+          S. R. Ranganathan (Father of Library Science in India):.</p>
+      <a href="/student_registration/" id="student-register-btn" class="btn btn-primary btn-lg">Register as Student</a>
+    </div>
+    <br>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 image-container">
+          <!-- Wrap the image with an anchor tag to make it clickable -->
+          <a href="/admin_login/" class="image-clickable" data-sound="{% static 'click-sound.mp3' %}">
+            <img src="{% static 'broken.png' %}" width="60%" height="80%" alt="">
+          </a>
+        </div>
+        <div class="col-lg-6 image-container">
+          <!-- Wrap the image with an anchor tag to make it clickable -->
+          <a href="/student_login/" class="image-clickable" data-sound="{% static 'click-sound.mp3' %}">
+            <img src="{% static 'broke.png' %}" width="60%" height="80%" alt="">
+          </a>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- Footer Section -->
+<footer>
+    <p>Grantalaya © 2024
+    nakul sriraj's website</p>
+</footer>
+
+<!-- Audio element for sound effects -->
+<audio id="click-sound">
+    <source src="{% static 'click-sound.mp3' %}" type="audio/mpeg">
+</audio>
+
+{% endblock %}
+{% block js %}
+<script>
+    // Function to play sound and animate the clicked image
+    function handleImageClick(event, audio) {
+        event.preventDefault();
+        const image = event.target;
+        const href = image.parentElement.getAttribute('href');
+
+        // Play sound
+        audio.play();
+
+        // Add animation class to enlarge the image
+        image.classList.add('clicked-image');
+
+        // Navigate to the next page after the animation finishes
+        setTimeout(function () {
+            window.location.href = href;
+        }, 2000); // 2 seconds delay for the animation
+    }
+
+    document.querySelectorAll('.image-clickable').forEach(function (element) {
+        const audio = document.getElementById('click-sound');
+
+        element.addEventListener('click', function(event) {
+            handleImageClick(event, audio);
+        });
+    });
+</script>
+{% endblock %}

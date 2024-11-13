@@ -1,0 +1,143 @@
+{% extends 'student_navbar.html' %}
+
+{% load static %}  <!-- Ensure static files are loaded -->
+
+{% block title %} Profile {% endblock %}
+
+{% block css %}
+<style>
+/* Add a background image or color to the body */
+body {
+    background: url("{% static 'background.jpg' %}") no-repeat center center fixed; /* Add your static background image here */
+    background-size: cover;
+    background-color: #f3f1e7; /* Fallback background color if image fails */
+}
+
+/* Style the profile container */
+.profile {
+    padding: 3%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.9); /* White background with slight transparency */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+/* Center and style the profile image */
+.profile-img {
+    text-align: center;
+}
+
+/* Style the upload button within the profile image area */
+.profile-img .file {
+    position: relative;
+    overflow: hidden;
+    margin-top: -20%;
+    width: 70%;
+    border: none;
+    border-radius: 0;
+    font-size: 15px;
+    background: #212529b8;
+    color: #fff;
+    padding: 10px;
+}
+
+/* Additional styling for the profile details */
+label {
+    font-weight: bold;
+    color: #555;
+}
+
+p {
+    color: #333;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container profile">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="profile-img">
+                <!-- Fallback if user doesn't have a profile image -->
+                {% if user.student.image %}
+                    <img src="{{ user.student.image.url }}" alt="Profile Image" width="310px" height="270px">
+                {% else %}
+                    <img src="{% static 'images/default-profile.jpg' %}" alt="Default Profile Image" width="310px" height="270px">
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="profile-tab">
+                <div class="tab-pane">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>ID:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ user.id }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Username:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ user.username }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Full Name:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ user.get_full_name }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Email:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ user.email }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Phone Number:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ user.student.phone }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Branch:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ user.student.branch }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Class:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ user.student.classroom }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Roll Number:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ user.student.roll_no }}</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="/edit_profile/" style="width: 9rem;" class="btn btn-outline-primary mt-3">Edit Profile</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

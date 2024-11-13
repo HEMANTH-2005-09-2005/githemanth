@@ -1,0 +1,65 @@
+{% extends 'admin_navbar.html' %}
+{% load static %}
+{% block title %} Issue Book {% endblock %}
+{% block css %}
+<style>
+  body {
+    background-image: url("{% static 'background.jpg' %}"); /* Full-page background image */
+    background-size: cover; /* Ensure the image covers the whole page */
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; /* Full height of the viewport */
+  }
+
+  /* Gradient brown background for the form container */
+  .form-container {
+    background: linear-gradient(135deg, #8B4513, #D2691E); /* Gradient from darker to lighter brown */
+    border-radius: 10px;
+    padding: 30px; /* Increased padding for better spacing */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for better visibility */
+    color: #FFF; /* Set text color to white for better contrast */
+    max-width: 600px; /* Limit the width of the container */
+    margin: 20px auto; /* Center the container */
+  }
+
+  .form-group label {
+    color: #FFF; /* Set label text color to white for better visibility */
+  }
+
+  .btn-outline-primary {
+    color: #FFF; /* Set button text color to white */
+    border-color: #FFD700; /* Gold border color for button */
+  }
+
+  .btn-outline-primary:hover {
+    background-color: #FFD700; /* Gold background on hover */
+    color: #000; /* Black text on hover */
+  }
+</style>
+{% endblock %}
+{% block body %}
+<div class="container mt-4">
+    <div class="form-container"> <!-- Added gradient background container -->
+        <form method="POST"> {% csrf_token %}
+            {% for i in form %}
+            <div class="form-group">
+                <br>
+                <label class="control-label col-xs-4">{{ i.label_tag }}</label>
+                <div class="col-xs-8 mt-2">
+                    {{ i }}
+                </div>
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-outline-primary mt-4">Issue Book</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    {% if alert %}
+    alert("Book Successfully Issued.")
+    document.location = "/issue_book"
+    {% endif %}
+</script>
+{% endblock %}

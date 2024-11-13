@@ -1,0 +1,109 @@
+{% extends 'admin_navbar.html' %}
+{% load static %}
+{% block title %} All Students List {% endblock %}
+{% block css %}
+<style>
+  body {
+    background-image: url("{% static 'background.jpg' %}"); /* Full-page background image */
+    background-size: cover; /* Ensure the image covers the whole page */
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; /* Full height of the viewport */
+  }
+
+  /* Gradient brown background for the table container */
+  .table-container {
+    background: linear-gradient(135deg, #8B4513, #D2691E); /* Gradient from darker to lighter brown */
+    border-radius: 10px;
+    padding: 30px; /* Increased padding for better spacing */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for better visibility */
+    color: #FFF; /* Set the text color to white for better contrast */
+    max-width: 900px; /* Limit the width of the container */
+    margin: 20px auto; /* Center the container */
+    opacity: 0; /* Initially hidden for animation */
+    animation: fadeIn 1s forwards; /* Fade-in animation */
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  h1 {
+    color: #FFD700; /* Gold color for the header */
+  }
+
+  .table {
+    color: #000; /* Set table text color to black */
+  }
+
+  .table thead th {
+    background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent background for header */
+    color: #FFF; /* White text color for header */
+  }
+
+  .table-hover tbody tr {
+    opacity: 0; /* Initially hidden for row animation */
+    animation: fadeInRow 0.5s forwards; /* Fade-in animation for each row */
+  }
+
+  .table-hover tbody tr:nth-child(1) { animation-delay: 0.1s; }
+  .table-hover tbody tr:nth-child(2) { animation-delay: 0.2s; }
+  .table-hover tbody tr:nth-child(3) { animation-delay: 0.3s; }
+  .table-hover tbody tr:nth-child(4) { animation-delay: 0.4s; }
+  .table-hover tbody tr:nth-child(5) { animation-delay: 0.5s; }
+
+  @keyframes fadeInRow {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .btn-danger {
+    transition: background-color 0.3s; /* Smooth transition for button color */
+  }
+
+  .btn-danger:hover {
+    background-color: #c82333; /* Darker red on hover */
+  }
+</style>
+{% endblock %}
+{% block body %}
+<div class="container mt-4">
+    <div class="table-container">
+        <h1 class="text-center"><u>All Issued Books</u></h1>
+        <table class="table table-hover" id="example">
+            <thead>
+                <tr class="text-center">
+                    <th>Sr.No</th>
+                    <th>Student</th>
+                    <th>Student ID</th>
+                    <th>Book Name</th>
+                    <th>ISBN</th>
+                    <th>Issued Date</th>
+                    <th>Expiry Date</th>
+                    <th>Fine</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in details %}
+                <tr class="text-center">
+                    <td>{{ forloop.counter }}.</td>
+                    <td>{{ i.0 }}</td>
+                    <td>{{ i.1 }}</td>
+                    <td>{{ i.2 }}</td>
+                    <td>{{ i.3 }}</td>
+                    <td>{{ i.4 }}</td>
+                    <td>{{ i.5 }}</td>
+                    <td>₹ {{ i.6 }}</td>
+                    <td>
+                        <a href="{% url 'delete_issue' i.1 %}" class="btn btn-danger"
+                           onclick="return confirm('Are you sure you want to delete this student and their issued book details?')">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

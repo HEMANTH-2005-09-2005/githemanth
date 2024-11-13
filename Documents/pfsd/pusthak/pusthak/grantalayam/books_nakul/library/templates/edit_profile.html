@@ -1,0 +1,78 @@
+{% extends 'student_navbar.html' %}
+
+{% block title %} Edit Profile {% endblock %}
+
+{% block css %}
+<style>
+  body {
+    background-image: url("{% static 'background.jpg' %}"); /* Full-page background image */
+    background-size: cover; /* Ensure the image covers the whole page */
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; /* Full height of the viewport */
+    display: flex; /* Use flexbox for centering */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+  }
+
+  .container {
+    background-color: rgba(255, 255, 255, 0.9); /* White background with slight transparency */
+    border-radius: 10px; /* Rounded corners */
+    padding: 30px; /* Spacing inside the container */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    width: 100%; /* Full width for responsiveness */
+    max-width: 600px; /* Limit max width */
+  }
+
+  h1 {
+    text-align: center; /* Center align title */
+    color: #333; /* Dark text color */
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Edit Profile</h1> <!-- Title for the form -->
+    <form method="POST"> {% csrf_token %}
+        <div class="row mt-4">
+            <div class="form-group col-md-6">
+                <label><i style="font-weight: bold;">Email</i></label>
+                <input type="email" class="form-control mt-2" name="email" value="{{user.email}}">
+            </div>
+            <div class="form-group col-md-6">
+                <label><i style="font-weight: bold;">Mobile Number</i></label>
+                <input type="number" class="form-control mt-2" name="phone" value="{{user.student.phone}}">
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="form-group col-md-6">
+                <label><i style="font-weight: bold;">Branch Name</i></label>
+                <input type="text" class="form-control mt-2" name="branch" value="{{user.student.branch}}">
+            </div>
+            <div class="form-group col-md-6">
+                <label><i style="font-weight: bold;">Class Name</i></label>
+                <input type="text" class="form-control mt-2" name="classroom" value="{{user.student.classroom}}">
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="form-group col-md-6">
+                <label><i style="font-weight: bold;">Roll Number</i></label>
+                <input type="text" class="form-control mt-2" name="roll_no" value="{{user.student.roll_no}}">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-outline-primary mt-5">Update Profile</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+    {% if alert %}
+    alert("Profile Updated Successfully.")
+    document.location = "/profile"
+    {% endif %}
+</script>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'student_navbar.html' %}
+{% load static %}
+{% block title %} All Students List {% endblock %}
+{% block css %}
+<style>
+  body {
+    background-image: url("{% static 'background.jpg' %}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    margin: 0;
+  }
+
+  .table-container {
+    background: linear-gradient(135deg, #8B4513, #D2691E);
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    max-width: 900px;
+    margin: 20px auto;
+    opacity: 1;
+  }
+
+  h1 {
+    color: #FFD700;
+  }
+
+  .table {
+    color: #000;
+  }
+
+  .table thead th {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #000;
+  }
+
+  .table-hover tbody tr {
+    opacity: 1;
+  }
+
+  .btn-danger {
+    transition: background-color 0.3s;
+  }
+
+  .btn-danger:hover {
+    background-color: #c82333;
+  }
+</style>
+{% endblock %}
+{% block body %}
+<div class="container mt-4">
+    <div class="table-container">
+        <h1 class="text-center"><u>All Issued Books</u></h1>
+        <table class="table table-hover" id="example">
+            <thead>
+                <tr class="text-center">
+                    <th>Sr.No</th>
+                    <th>Student ID</th>
+                    <th>Student Name</th>
+                    <th>Book Name</th>
+                    <th>Author</th>
+                    <th>Issued Date</th>
+                    <th>Expiry Date</th>
+                    <th>Fine</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in li1 %}
+                <tr class="text-center">
+                    <td>{{ forloop.counter }}.</td>
+                    <td>{{ i.0 }}</td>  <!-- Student ID -->
+                    <td>{{ i.1 }}</td>  <!-- Student Name -->
+                    <td>{{ i.2 }}</td>  <!-- Book Name -->
+                    <td>{{ i.3 }}</td>  <!-- Author -->
+                    <td>{{ i.4 }}</td>  <!-- Issued Date -->
+                    <td>{{ i.5 }}</td>  <!-- Expiry Date -->
+                    <td>₹ {{ i.6 }}</td> <!-- Fine -->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
